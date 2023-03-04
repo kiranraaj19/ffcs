@@ -229,7 +229,16 @@ curl --request GET \
 
 ![image](https://user-images.githubusercontent.com/39441413/222921330-919c4137-483b-43ec-9bb7-c4144f243832.png)
 
+## Slots
+
+![image](https://user-images.githubusercontent.com/39441413/222922099-197d7efe-6d9b-4d37-ab4d-3eca3591dc63.png)
+
 ## Courses
 
+![image](https://user-images.githubusercontent.com/39441413/222922209-0f06a598-67b7-47dc-9bd0-689b70902710.png)
+
+## Students
+
+![image](https://user-images.githubusercontent.com/39441413/222922340-05d9f1ee-c1be-4bb0-be1e-d0791ec036e9.png)
 
 
