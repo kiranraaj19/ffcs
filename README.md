@@ -128,7 +128,7 @@ curl --request POST \
       "end": "2019-10-24T14:15:22Z"
     }
   ]
-}
+}'
 ```
 
 ### Possible Responses
