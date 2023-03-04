@@ -60,8 +60,7 @@ curl --request POST \
 
 ### Possible Responses
 - 401 Forbidden Req (Make sure you are an admin or using admin token)
-- 405 Faculty with given ID already exists
-- 500 Server error (Server Might be down)
+- 500 Server error (Server Might be down or Faculty already exists)
 - 201 Ok Status code e.g {"success":true,"data":{"id":"4","name":"Prof. Nachiyappan"}
 
 ## /admin/course
@@ -135,8 +134,7 @@ curl --request POST \
 ### Possible Responses
 
 - 401 Forbidden Req (Make sure you are an admin or using admin token)
-- 405 Slot with given ID already exists
-- 500 Server error (Server Might be down)
+- 500 Server error (Server Might be down or Slot already exists)
 - 201 Ok Status code e.g {"success":true,"data":{"id":"2","name":"test"}}
 
 
