@@ -197,6 +197,7 @@ curl --request POST \
 ### Possible Responses
 
 - 401 Forbidden Req (Make sure you are an admin or using admin token)
+- 405 Slots clash
 - 500 Server error (Server Might be down)
 - 201 Ok Status code 
 
