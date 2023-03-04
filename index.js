@@ -289,6 +289,52 @@ app.get('/timetable', authenticateToken, async (req,res) => {
 
 })
 
+// Endpoints for checking contents in tables
+app.get('/faculties', async (req,res) => {
+
+  try {
+  const {rows} = await pool.query(`
+    SELECT * FROM Faculty
+  `)
+
+  res.status(201).json({success:true, data: rows})
+  } catch (err) {
+    console.log(err)
+    res.status(500).json({success:false, error: err})
+  }
+  
+})
+
+app.get('/courses', async (req,res) => {
+
+  try {
+  const {rows} = await pool.query(`
+    SELECT * FROM Course
+  `)
+
+  res.status(201).json({success:true, data: rows})
+  } catch (err) {
+    console.log(err)
+    res.status(500).json({success:false, error: err})
+  }
+  
+})
+
+app.get('/slots', async (req,res) => {
+
+  try {
+  const {rows} = await pool.query(`
+    SELECT * FROM Slot
+  `)
+
+  res.status(201).json({success:true, data: rows})
+  } catch (err) {
+    console.log(err)
+    res.status(500).json({success:false, error: err})
+  }
+  
+})
+
 function authenticateToken(req,res,next) {
     const authHeader = req.headers['authorization']
     const token = authHeader.split(' ')[1]
