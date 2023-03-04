@@ -75,25 +75,70 @@ app.post('/admin/course',authenticateToken, async (req, res) => {
       WHERE id IN (${faculty_ids.map((id) => `'${id}'`).join(', ')})
     `);
 
-    const { rows: slots } = await pool.query(`
+    const { rows: allowed_slots } = await pool.query(`
       SELECT id, timings
         FROM Slot
         WHERE id IN (${slot_ids.map((id) => `'${id}'`).join(', ')})
     `);
 
-    console.log(faculties)
-    console.log(slots)
-
     const { rows } = await pool.query(`
       INSERT INTO Course (id, name, course_type, faculties, allowed_slots)
       VALUES ($1, $2, $3, $4, $5)
-    `, [id, name, course_type, JSON.stringify(faculties), JSON.stringify(slots)]);
+    `, [id, name, course_type, JSON.stringify(faculties), JSON.stringify(allowed_slots)]);
     
     res.json({
       success: true,
-      data: rows[0],
+      data: {id, name, faculties, allowed_slots},
     });
   });
+
+  app.get('/faculty/:faculty_id', async (req,res) => {
+    const { faculty_id } = req.params;
+
+    try {
+      const { rows: faculty } = await pool.query(`
+        SELECT id, name
+        FROM Faculty
+        WHERE id = $1
+      `, [faculty_id]);
+  
+      if (faculty.length == 0) {
+        return res.status(404).json({ success: false, message: `Faculty with id ${faculty_id} not found` });
+      }
+  
+      return res.json({ success: true, data: faculty });
+    } catch (error) {
+      console.error(`Error fetching faculty with id ${faculty_id}`, error);
+      return res.status(500).json({ success: false, message: 'Server error' });
+    }
+  })
+
+  app.get('/course/:course_id', async (req,res) => {
+    const { course_id } = req.params;
+
+    try {
+      const { rows: course } = await pool.query(`
+        SELECT id,name,course_type,faculties,allowed_slots
+        FROM Course
+        WHERE id = $1
+      `, [course_id]);
+      console.log(course)
+
+      if (course.length == 0) {
+        return res.status(404).json({ success: false, message: `Course with id ${course_id} not found` });
+      }
+
+      const {id,name,course_type, faculties, allowed_slots} = course[0]
+      
+      const faculty_ids = faculties.map(({id,name}) => (id))
+      const slot_ids = allowed_slots.map(({id,timings}) => (id))
+    
+      return res.json({ success: true, data: {id,name,slot_ids,faculty_ids,course_type} });
+    } catch (error) {
+      console.error(`Error fetching faculty with id ${course_id}`, error);
+      return res.status(500).json({ success: false, message: 'Server error' });
+    }
+  })
   
 
 function authenticateToken(req,res,next) {
