@@ -219,6 +219,7 @@ app.post('/admin/course',authenticateToken, async (req, res) => {
         // Extract all slot ids of registered courses and store them in a Set
         const registeredSlots = new Set();
         
+        if (rows.length > 0){
         rows[0].registered_courses.forEach(item => {
           if (item.slots){
           item.slots.forEach(slot => {
@@ -226,6 +227,7 @@ app.post('/admin/course',authenticateToken, async (req, res) => {
           })
         }
         })
+      }
 
         for (const slot of slot_ids) {
           if (registeredSlots.has(slot)){
