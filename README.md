@@ -110,6 +110,34 @@ curl --request POST \
 - 500 Server error (Server Might be down)
 - 201 Ok Status code e.g {"success":true,"data":{"id":"2","name":"test"}}
 
+## /admin/slot
+
+This is used to create slots
+
+```bash
+curl --request POST \
+  --url http://localhost:3000/admin/slot \
+  --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MCwibmFtZSI6ImFkbWluIiwiaWF0IjoxNjc3ODY3OTYxfQ.6pWUFGFJzWjdITpj4MQZemmp2C8t1qhHTJVBQmQSW6I' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "id": "C1",
+  "timings": [
+    {
+      "day": "WED",
+      "start": "2019-10-24T14:15:22Z",
+      "end": "2019-10-24T14:15:22Z"
+    }
+  ]
+}
+```
+
+### Possible Responses
+
+- 401 Forbidden Req (Make sure you are an admin or using admin token)
+- 500 Server error (Server Might be down)
+- 201 Ok Status code e.g {"success":true,"data":{"id":"2","name":"test"}}
+
+
 ## Public Routes
 
 ## /faculty/:faculty_id
