@@ -195,7 +195,7 @@ curl --request POST \
 
 ### Possible Responses
 
-- 401 Forbidden Req (Make sure you are an admin or using admin token)
+- 401 Forbidden Req (Make sure you using valid token)
 - 405 Slots clash
 - 500 Server error (Server Might be down)
 - 201 Ok Status code 
@@ -214,6 +214,6 @@ curl --request GET \
 
 ### Possible Responses
 
-- 401 Forbidden Req (Make sure you are an admin or using admin token)
+- 401 Forbidden Req (Make sure you are using valid token)
 - 500 Server error (Server Might be down)
 - 201 Ok Status code 
