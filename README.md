@@ -43,7 +43,7 @@ which can be used by access routes meant for the particular student. This way a 
 
 # ER Diagram for the schemas
 
-![image](https://user-images.githubusercontent.com/39441413/222899103-18cb411d-2e28-4cab-be69-f813508f8952.png)
+![image](https://user-images.githubusercontent.com/39441413/222928836-f92f148f-61a1-4d2c-847f-23030958d667.png)
 
 # API Routes available
 
@@ -243,7 +243,7 @@ curl --request GET \
 
 ## Endpoints to check contents of Tables
 
-### Courses (http://18.221.133.215:3000/faculties)
+### Courses (http://18.221.133.215:3000/courses)
 ### Slots (http://18.221.133.215:3000/slots)
 ### Faculties (http://18.221.133.215:3000/faculties)
 
