@@ -101,7 +101,7 @@ curl --request POST \
   --url http://localhost:3000/admin/student \
   --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MCwibmFtZSI6ImFkbWluIiwiaWF0IjoxNjc3ODY3OTYxfQ.6pWUFGFJzWjdITpj4MQZemmp2C8t1qhHTJVBQmQSW6I' \
   --header 'Content-Type: application/json' \
-> --data '{"id": "2", "name": "test"}'
+  --data '{"id": "2", "name": "test"}'
 ```
 
 ### Possible Responses
