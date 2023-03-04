@@ -241,4 +241,17 @@ curl --request GET \
 
 ![image](https://user-images.githubusercontent.com/39441413/222922340-05d9f1ee-c1be-4bb0-be1e-d0791ec036e9.png)
 
+## Endpoints to check contents of Tables
+
+### Courses (http://18.221.133.215:3000/faculties)
+### Slots (http://18.221.133.215:3000/slots)
+### Faculties (http://18.221.133.215:3000/faculties)
+
+## Testing with API
+
+- Use the admin auth token to create a particular slot
+- Register a faculty as admin
+- Create a course with generated slot and admin. (If error occurs, check that you didnt create an entry with duplicate primary key)
+- As a public user, you can view faculty information and course information
+- As a student, use the given student auth token (The given token is of Student id. 1), Register for avaialable courses
 
