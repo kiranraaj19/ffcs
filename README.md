@@ -173,3 +173,52 @@ curl --request GET \
 - 401 Forbidden Req (Make sure you are an admin or using admin token)
 - 500 Server error (Server Might be down)
 - 201 Ok Status code e.g {"success":true,"data":{"id":"1","name":"CSE","slot_ids":["A1"],"faculty_ids":["1"],"course_type":"THEORY"}}
+
+
+## /register
+
+Student should be able to register
+
+```bash
+curl --request POST \
+  --url http://localhost:3000/register \
+  --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IktpcmFucmFhaiIsImlhdCI6MTY3Nzg2ODA0Nn0.v16b2uwIGh5FIBGyfYj9wV3Hin7V5YEy2Bgqnkm6mAc' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "course_id": "2",
+  "faculty_id": "4",
+  "slot_ids": [
+    "G1"
+  ]
+}'
+```
+
+### Possible Responses
+
+- 401 Forbidden Req (Make sure you are an admin or using admin token)
+- 500 Server error (Server Might be down)
+- 201 Ok Status code 
+
+## /timetable
+
+Student should be able to see (only) his timetable
+
+```bash
+curl --request POST \
+  --url http://localhost:3000/register \
+  --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IktpcmFucmFhaiIsImlhdCI6MTY3Nzg2ODA0Nn0.v16b2uwIGh5FIBGyfYj9wV3Hin7V5YEy2Bgqnkm6mAc' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "course_id": "2",
+  "faculty_id": "4",
+  "slot_ids": [
+    "G1"
+  ]
+}'
+```
+
+### Possible Responses
+
+- 401 Forbidden Req (Make sure you are an admin or using admin token)
+- 500 Server error (Server Might be down)
+- 201 Ok Status code 
