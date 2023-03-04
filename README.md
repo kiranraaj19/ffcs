@@ -222,3 +222,14 @@ curl --request GET \
 - 401 Forbidden Req (Make sure you are using valid token)
 - 500 Server error (Server Might be down)
 - 201 Ok Status code 
+
+## Generated Data using API (Can also be used for testing)
+
+## Faculties
+
+![image](https://user-images.githubusercontent.com/39441413/222921330-919c4137-483b-43ec-9bb7-c4144f243832.png)
+
+## Courses
+
+
+
