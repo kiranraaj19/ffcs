@@ -228,6 +228,29 @@ app.post('/admin/course',authenticateToken, async (req, res) => {
   
   })
 
+app.get('/timetable', authenticateToken, async (req,res) => {
+
+  if (req.user.id > 0) {
+
+    const id = req.user.id;
+
+    const { rows: students } = await pool.query(`
+      SELECT * FROM Student
+      WHERE id = $1
+    `, [id])
+
+    if (students.length == 0) {
+      return res.status(401).send({success:false, data: {}})
+    }
+
+    return res.status(201).send({success: true, data: students[0]})
+    
+  } else {
+    return res.status(401).send({success:false, data: {}})
+  }
+
+})
+
 function authenticateToken(req,res,next) {
     const authHeader = req.headers['authorization']
     const token = authHeader.split(' ')[1]
