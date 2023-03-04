@@ -22,7 +22,7 @@ const pool = new Pool({
 
 app.post('/admin/faculty', authenticateToken, (req,res) => {
     // Not admin
-    if (req.user.id != 0) return res.sendStatus(401)
+    if (req.user.id != 0) return res.status(401).send({succss: false, data: {}})
 
     // Get the id and name from payload
     const { id, name } = req.body;
@@ -37,29 +37,33 @@ app.post('/admin/faculty', authenticateToken, (req,res) => {
     });
 })
 
-app.post('/admin/slot', authenticateToken, (req,res) => {
+app.post('/admin/slot', authenticateToken, async (req,res) => {
     // Not admin
     if (req.user.id != 0) return res.sendStatus(401)
 
     const { id, timings } = req.body;
 
   try {
+
+    // Check if slot with given ID already exists
+    const { rowCount: existingRowCount } = await pool.query('SELECT COUNT(*) FROM Slot WHERE id = $1', [id]);
+    if (existingRowCount > 0) {
+      return res.status(405).json({ success: false, message: 'Slot with given ID already exists' });
+    }
+
     const { rowCount } = pool.query(`
       INSERT INTO Slot (id, timings)
       VALUES ($1, $2)
     `, [id, JSON.stringify(timings)]);
-
-    if (rowCount !== 1) {
-      throw new Error('Failed to create slot');
-    }
 
     const createdSlot = { id, timings };
 
     res.json({ success: true, data: createdSlot });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ success: false, error: 'Failed to create slot' });
+    res.status(500).json({ success: false, data: 'Failed to create slot' });
   }
+  
 })
 
 app.post('/admin/course',authenticateToken, async (req, res) => {
@@ -67,7 +71,7 @@ app.post('/admin/course',authenticateToken, async (req, res) => {
     if (req.user.id != 0) return res.sendStatus(401)
 
     const { id, name, course_type, slot_ids, faculty_ids } = req.body;
-  
+    try {
     const { rows: faculties } = await pool.query(`
       SELECT id, name
       FROM Faculty
@@ -80,6 +84,10 @@ app.post('/admin/course',authenticateToken, async (req, res) => {
         WHERE id IN (${slot_ids.map((id) => `'${id}'`).join(', ')})
     `);
 
+    if (allowed_slots.length == 0) {
+      return res.status(405).send({success:false, error: "Invalid Slot"})
+    }
+
     const { rows } = await pool.query(`
       INSERT INTO Course (id, name, course_type, faculties, allowed_slots)
       VALUES ($1, $2, $3, $4, $5)
@@ -89,6 +97,10 @@ app.post('/admin/course',authenticateToken, async (req, res) => {
       success: true,
       data: {id, name, faculties, allowed_slots},
     });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, data: 'Failed to create course' });
+    }
   });
 
   app.post('/admin/student', authenticateToken, async (req,res) => {
@@ -96,7 +108,7 @@ app.post('/admin/course',authenticateToken, async (req, res) => {
     if (req.user.id != 0) return res.sendStatus(401)
 
     const { id,name } = req.body;
-
+    
     // Check if the student doesnt exist already
     const {rows: students} = await pool.query(`
       SELECT id from Student WHERE id = $1 
@@ -137,7 +149,7 @@ app.post('/admin/course',authenticateToken, async (req, res) => {
         return res.status(404).json({ success: false, message: `Faculty with id ${faculty_id} not found` });
       }
   
-      return res.json({ success: true, data: faculty });
+      return res.status(201).json({ success: true, data: faculty });
     } catch (error) {
       console.error(`Error fetching faculty with id ${faculty_id}`, error);
       return res.status(500).json({ success: false, message: 'Server error' });
@@ -198,6 +210,29 @@ app.post('/admin/course',authenticateToken, async (req, res) => {
           [slot_ids]
         );
 
+        // Check if the slot id clashes with already registered courses
+        const { rows } = await pool.query(
+          'SELECT registered_courses FROM Student WHERE id = $1',
+          [req.user.id]
+        );
+        
+        // Extract all slot ids of registered courses and store them in a Set
+        const registeredSlots = new Set();
+        
+        rows[0].registered_courses.forEach(item => {
+          if (item.slots){
+          item.slots.forEach(slot => {
+            registeredSlots.add(slot.id)
+          })
+        }
+        })
+
+        for (const slot of slot_ids) {
+          if (registeredSlots.has(slot)){
+            return res.status(405).send({success:false, error: "Slots Clash"})
+          }
+        }
+
         // Construct response object
         const registered_course = {
           course: {
@@ -230,10 +265,12 @@ app.post('/admin/course',authenticateToken, async (req, res) => {
 
 app.get('/timetable', authenticateToken, async (req,res) => {
 
+  try {
   if (req.user.id > 0) {
 
     const id = req.user.id;
-
+  
+  
     const { rows: students } = await pool.query(`
       SELECT * FROM Student
       WHERE id = $1
@@ -244,9 +281,14 @@ app.get('/timetable', authenticateToken, async (req,res) => {
     }
 
     return res.status(201).send({success: true, data: students[0]})
+  
     
   } else {
     return res.status(401).send({success:false, data: {}})
+  }
+  } catch (err) {
+    console.log(err)
+    res.status(500).json({success:false, error: err})
   }
 
 })
