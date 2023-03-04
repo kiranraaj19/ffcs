@@ -26,7 +26,6 @@ app.post('/admin/faculty', authenticateToken, (req,res) => {
 
     // Get the id and name from payload
     const { id, name } = req.body;
-    console.log(id,name);
     pool.query('INSERT INTO Faculty (id,name) VALUES ($1, $2)', [id,name], (error, results) => {
         if (error) {
         console.error(error);
@@ -91,6 +90,38 @@ app.post('/admin/course',authenticateToken, async (req, res) => {
       data: {id, name, faculties, allowed_slots},
     });
   });
+
+  app.post('/admin/student', authenticateToken, async (req,res) => {
+    // Not admin
+    if (req.user.id != 0) return res.sendStatus(401)
+
+    const { id,name } = req.body;
+
+    // Check if the student doesnt exist already
+    const {rows: students} = await pool.query(`
+      SELECT id from Student WHERE id = $1 
+    `, [id])
+
+    if (!students){
+      return res.status(401).send({success: false, data: {}})
+    } else {
+      try {
+      pool.query('INSERT INTO Student (id,name, registered_courses) VALUES ($1, $2, $3)', [id,name,[]], (error, results) => {
+        if (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: 'Failed to insert Student.' });
+        } else {
+        console.log(`Inserted Student with ID ${id} and name ${name}.`);
+        res.status(201).json({ success: true, data: { id, name } });
+        }
+      })
+      } catch (error) {
+        console.error(`Error inserting student with id ${id}`, error);
+        return res.status(500).json({ success: false, message: 'Server error' });
+      }
+    };
+
+    })
 
   app.get('/faculty/:faculty_id', async (req,res) => {
     const { faculty_id } = req.params;
