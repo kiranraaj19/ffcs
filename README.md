@@ -205,16 +205,10 @@ curl --request POST \
 Student should be able to see (only) his timetable
 
 ```bash
-curl --request POST \
-  --url http://localhost:3000/register \
-  --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IktpcmFucmFhaiIsImlhdCI6MTY3Nzg2ODA0Nn0.v16b2uwIGh5FIBGyfYj9wV3Hin7V5YEy2Bgqnkm6mAc' \
-  --header 'Content-Type: application/json' \
-  --data '{
-  "course_id": "2",
-  "faculty_id": "4",
-  "slot_ids": [
-    "G1"
-  ]
+curl --request GET \
+  --url http://localhost:3000/timetable \
+  --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MCwibmFtZSI6ImFkbWluIiwiaWF0IjoxNjc3ODY3OTYxfQ.6pWUFGFJzWjdITpj4MQZemmp2C8t1qhHTJVBQmQSW6I' \
+  --header 'Content-Type: application/json'
 }'
 ```
 
