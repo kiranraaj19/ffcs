@@ -171,6 +171,62 @@ app.post('/admin/course',authenticateToken, async (req, res) => {
     }
   })
   
+  app.post('/register', authenticateToken, async (req,res) => {
+    // Couldnt deserialize ID so not a valid student
+    if (!req.user.id) {
+      return res.status(401).send({success:false,data:{}})
+    }
+
+    // A Valid student is accessing the endpoint
+    if (req.user.id > 0) {
+
+      const { course_id, faculty_id, slot_ids } = req.body;
+
+      try {
+        // Fetch course data
+        const { rows: course } = await pool.query(
+          'SELECT id, name, course_type, faculties, allowed_slots FROM Course WHERE id = $1',
+          [course_id]
+        );
+
+        // Fetch faculty data
+        const faculty = course[0].faculties.find((faculty) => faculty.id === faculty_id);
+
+        // Fetch slot data
+        const { rows: slots } = await pool.query(
+          'SELECT id, timings FROM Slot WHERE id = ANY($1::text[])',
+          [slot_ids]
+        );
+
+        // Construct response object
+        const registered_course = {
+          course: {
+            id: course[0].id,
+            name: course[0].name,
+            faculties: [faculty],
+            course_type: course[0].course_type,
+            allowed_slots: course[0].allowed_slots,
+          },
+          slots,
+        };
+
+        // Insert registered course data into student's registered_courses field
+        await pool.query(
+          'UPDATE Student SET registered_courses = registered_courses || $1::jsonb WHERE id = $2',
+          [JSON.stringify([registered_course]), req.user.id]
+        );
+
+        res.status(201).json({ success: true, data: { registered_course } });
+      } catch (error) {
+        console.error('Error registering course', error);
+        res.status(500).json({ success: false, message: 'Server error' });
+      }
+      
+    } else {
+      res.status(401).send({success:false,data:{}})
+    }
+  
+  })
 
 function authenticateToken(req,res,next) {
     const authHeader = req.headers['authorization']
