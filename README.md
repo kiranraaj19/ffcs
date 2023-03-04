@@ -4,6 +4,12 @@ The source code given is for cross checking the logic and legality of the api co
 
 # Testing
 
+## AWS Server IP
+
+```bash
+18.221.133.215:3000
+```
+
 ## Admin AUTH Token:
 
 ```bash
@@ -49,7 +55,7 @@ This is used to create faculties
 
 ```bash
 curl --request POST \
-  --url http://localhost:3000/admin/faculty \
+  --url http://18.221.133.215:3000/admin/faculty \
   --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MCwibmFtZSI6ImFkbWluIiwiaWF0IjoxNjc3ODY3OTYxfQ.6pWUFGFJzWjdITpj4MQZemmp2C8t1qhHTJVBQmQSW6I' \
   --header 'Content-Type: application/json' \
   --data '{
@@ -69,7 +75,7 @@ This is used to create courses
 
 ```bash
 curl --request POST \
-  --url http://localhost:3000/admin/course \
+  --url http://18.221.133.215:3000/admin/course \
   --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MCwibmFtZSI6ImFkbWluIiwiaWF0IjoxNjc3ODY3OTYxfQ.6pWUFGFJzWjdITpj4MQZemmp2C8t1qhHTJVBQmQSW6I' \
   --header 'Content-Type: application/json' \
   --data '{
@@ -98,7 +104,7 @@ This is used to create students
 
 ```bash
 curl --request POST \
-  --url http://localhost:3000/admin/student \
+  --url http://18.221.133.215:3000/admin/student \
   --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MCwibmFtZSI6ImFkbWluIiwiaWF0IjoxNjc3ODY3OTYxfQ.6pWUFGFJzWjdITpj4MQZemmp2C8t1qhHTJVBQmQSW6I' \
   --header 'Content-Type: application/json' \
   --data '{"id": "2", "name": "test"}'
@@ -116,7 +122,7 @@ This is used to create slots
 
 ```bash
 curl --request POST \
-  --url http://localhost:3000/admin/slot \
+  --url http://18.221.133.215:3000/admin/slot \
   --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MCwibmFtZSI6ImFkbWluIiwiaWF0IjoxNjc3ODY3OTYxfQ.6pWUFGFJzWjdITpj4MQZemmp2C8t1qhHTJVBQmQSW6I' \
   --header 'Content-Type: application/json' \
   --data '{
@@ -146,7 +152,7 @@ This is used to access faculty information
 
 ```bash
 curl --request GET \
-  --url http://localhost:3000/faculty/1 \
+  --url http://18.221.133.215:3000/faculty/1 \
   --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IktpcmFucmFhaiIsImlhdCI6MTY3Nzg2ODA0Nn0.v16b2uwIGh5FIBGyfYj9wV3Hin7V5YEy2Bgqnkm6mAc' \
   --header 'Content-Type: application/json'
 ```
@@ -163,7 +169,7 @@ This is used to access faculty information
 
 ```bash
 curl --request GET \
-  --url http://localhost:3000/course/1 \
+  --url http://18.221.133.215:3000/course/1 \
   --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IktpcmFucmFhaiIsImlhdCI6MTY3Nzg2ODA0Nn0.v16b2uwIGh5FIBGyfYj9wV3Hin7V5YEy2Bgqnkm6mAc' \
   --header 'Content-Type: application/json'
 ```
@@ -181,7 +187,7 @@ Student should be able to register
 
 ```bash
 curl --request POST \
-  --url http://localhost:3000/register \
+  --url http://18.221.133.215:3000/register \
   --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IktpcmFucmFhaiIsImlhdCI6MTY3Nzg2ODA0Nn0.v16b2uwIGh5FIBGyfYj9wV3Hin7V5YEy2Bgqnkm6mAc' \
   --header 'Content-Type: application/json' \
   --data '{
@@ -206,7 +212,7 @@ Student should be able to see (only) his timetable
 
 ```bash
 curl --request GET \
-  --url http://localhost:3000/timetable \
+  --url http://18.221.133.215:3000/timetable \
   --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MCwibmFtZSI6ImFkbWluIiwiaWF0IjoxNjc3ODY3OTYxfQ.6pWUFGFJzWjdITpj4MQZemmp2C8t1qhHTJVBQmQSW6I' \
   --header 'Content-Type: application/json'
 }'
