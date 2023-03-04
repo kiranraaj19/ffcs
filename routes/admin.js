@@ -4,6 +4,9 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../db');
 
+// For Authentication using JOTS (Json Web Tokens)
+const jwt = require('jsonwebtoken')
+
 router.post('/faculty', authenticateToken, async (req,res) => {
     // Not admin
     if (req.user.id != 0) return res.status(401).send({success: false, data: {}})

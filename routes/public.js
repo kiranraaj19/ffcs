@@ -3,6 +3,9 @@ const express = require('express')
 const router = express.Router()
 const pool = require('../db');
 
+// For Authentication using JOTS (Json Web Tokens)
+const jwt = require('jsonwebtoken')
+
 router.get('/faculty/:faculty_id', async (req, res) => {
     const { faculty_id } = req.params;
 
