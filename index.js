@@ -20,12 +20,13 @@ const pool = new Pool({
   port: process.env.DB_PORT,
 });
 
-app.post('/admin/faculty', authenticateToken, (req,res) => {
+app.post('/admin/faculty', authenticateToken, async (req,res) => {
     // Not admin
-    if (req.user.id != 0) return res.status(401).send({succss: false, data: {}})
+    if (req.user.id != 0) return res.status(401).send({success: false, data: {}})
 
     // Get the id and name from payload
     const { id, name } = req.body;
+
     pool.query('INSERT INTO Faculty (id,name) VALUES ($1, $2)', [id,name], (error, results) => {
         if (error) {
         console.error(error);
@@ -44,13 +45,6 @@ app.post('/admin/slot', authenticateToken, async (req,res) => {
     const { id, timings } = req.body;
 
   try {
-
-    // Check if slot with given ID already exists
-    const { rowCount: existingRowCount } = await pool.query('SELECT COUNT(*) FROM Slot WHERE id = $1', [id]);
-    if (existingRowCount > 0) {
-      return res.status(405).json({ success: false, message: 'Slot with given ID already exists' });
-    }
-
     const { rowCount } = pool.query(`
       INSERT INTO Slot (id, timings)
       VALUES ($1, $2)
