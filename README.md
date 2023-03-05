@@ -4,6 +4,16 @@ The source code given is for cross checking the logic and legality of the api co
 
 # Testing
 
+Use these tables to refer while making requests
+
+[Faculty table](#faculties)
+
+[Slot table](#slots)
+
+[Course table](#courses)
+
+[Student table](#students)
+
 ## AWS Server IP
 
 ```bash
