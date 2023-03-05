@@ -43,7 +43,7 @@ which can be used by access routes meant for the particular student. This way a 
 
 # ER Diagram for the schemas
 
-![image](https://user-images.githubusercontent.com/39441413/222928836-f92f148f-61a1-4d2c-847f-23030958d667.png)
+![image](https://user-images.githubusercontent.com/39441413/222961230-771653ad-fe52-4ec7-8c50-51dae7a54b2a.png)
 
 # API Routes available
 
