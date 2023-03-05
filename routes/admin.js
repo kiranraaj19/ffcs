@@ -99,7 +99,7 @@ router.post('/student', authenticateToken, async (req,res) => {
       return res.status(401).send({success: false, data: {}})
     } else {
     try {
-    pool.query('INSERT INTO Student (id,name, registered_courses) VALUES ($1, $2, $3)', [id,name,[]], (error, results) => {
+    pool.query('INSERT INTO Student (id,name, registered_courses) VALUES ($1, $2, $3)', [id,name,JSON.stringify([])], (error, results) => {
         if (error) {
         console.error(error);
         res.status(500).json({ success: false, message: 'Failed to insert Student.' });
