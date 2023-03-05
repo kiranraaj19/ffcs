@@ -4,16 +4,6 @@ The source code given is for cross checking the logic and legality of the api co
 
 # Testing
 
-Use these tables to refer while making requests
-
-[Faculty table](#faculties)
-
-[Slot table](#slots)
-
-[Course table](#courses)
-
-[Student table](#students)
-
 ## AWS Server IP
 
 ```bash
@@ -54,6 +44,13 @@ which can be used by access routes meant for the particular student. This way a 
 # ER Diagram for the schemas
 
 ![image](https://user-images.githubusercontent.com/39441413/222961230-771653ad-fe52-4ec7-8c50-51dae7a54b2a.png)
+
+
+## Endpoints to check contents of Tables
+
+### Courses (http://18.221.133.215:3000/courses)
+### Slots (http://18.221.133.215:3000/slots)
+### Faculties (http://18.221.133.215:3000/faculties)
 
 # API Routes available
 
@@ -251,11 +248,6 @@ curl --request GET \
 
 ![image](https://user-images.githubusercontent.com/39441413/222922340-05d9f1ee-c1be-4bb0-be1e-d0791ec036e9.png)
 
-## Endpoints to check contents of Tables
-
-### Courses (http://18.221.133.215:3000/courses)
-### Slots (http://18.221.133.215:3000/slots)
-### Faculties (http://18.221.133.215:3000/faculties)
 
 ## Testing with API
 
