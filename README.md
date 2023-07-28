@@ -7,7 +7,7 @@ The source code given is for cross checking the logic and legality of the api co
 ## AWS Server IP
 
 ```bash
-18.221.133.215:3000
+18.221.133.215:3000 (Elastic IP has been removed because of incurred costs)
 ```
 
 ## Admin AUTH Token:
